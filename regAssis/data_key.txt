@@ -1,0 +1,1 @@
+{"timestamp":"1414587457","appId":"wx1d3765eb45497a18","nonceStr":"Wm3WZYTPz0wzccnW","token":"hkoJCcOGOllWvyPxTzx5bSRvqnV3ADi7rVseI3o6tnjQgItHP9nk9Ov0oXfIUMHx","ticket":"sM4AOVdWfPE4DxkXGEs8VE0UvuokXuPPmGE3enziI7kujB6NxwQKHF5oiWKuJq1WKmGcKRMQ3iNqILCUTZce4w","signature":"2adf00bc4f80e1e08fb3bf7cadde5a2f320f7808"}

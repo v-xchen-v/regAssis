@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="xchen" />
+		<meta name="robots" content="index, follow" />
+		<meta name="generator" content="RapidWeaver" />
+		
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
+  <meta name="baseurl" content="http://xchen100.cn/">
+
+  <title>Home | 欢迎新同学</title>
+
+  <link rel="stylesheet" type="text/css" media="all" href="rw_common/themes/offroad/consolidated.css?rwcache=519532457" />
+		
+  
+  <link href="https://fonts.googleapis.com/css?family=Istok+Web:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <script src="rw_common/themes/offroad/assets/javascript/html5shiv.js"></script>
+    <script src="rw_common/themes/offroad/assets/javascript/respond.js"></script>
+  <![endif]-->
+
+  
+  
+  
+</head>
+
+<body>
+  <div id="page" class="site">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <nav class="site-navigation" role="navigation">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="site-navigation-inner">
+            <ul><li class="selected"><a href="./" rel="" class="current">Home</a></li><li><a href="map/" rel="">Map</a></li><li><a href="aboutus/" rel="">About us</a></li></ul>
+          </div>
+        </div>
+      </div>
+    </nav><!-- .site-navigation -->
+
+    <header id="masthead" class="site-header" role="banner">
+      <div class="container">
+        <div class="site-branding">
+          <div class="site-title">
+            <a href="http://xchen100.cn/">欢迎新同学</a>
+          </div>
+
+          <div class="site-logo">
+            <a href="http://xchen100.cn/" class="site-logo"></a>
+          </div>
+
+          <div class="site-description">
+            code change world
+          </div>
+        </div><!-- .site-branding -->
+      </div><!-- .container -->
+    </header><!-- .site-header -->
+
+    <div class="container container-main">
+      <div class="row">
+        <main id="content" class="site-content col-xs-12 col-md-9" role="main">
+          <div class="site-content-inner">
+            您还没有取号
+          </div>
+        </main>
+
+        <aside class="site-sidebar col-xs-12 col-md-3">
+          <div class="sidebar">
+            <span style="font:12px PingFangSC-Regular; ">提示：</span>1<span style="font:12px PingFangSC-Regular; ">）请在校园范围内，定位并取号                        2）根据取得的号码排序进行教务注册、缴费、宿舍钥匙领取等</span>
+          </div>
+
+          <div class="plugin-sidebar">
+            
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <footer id="footer" class="site-footer" role="contentinfo">
+      <div class="row">
+        <div class="col-xs-12">
+          @2017 北大软微-新生入学助手
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="body-overlay"></div>
+
+  <!-- Javascript includes -->
+  <script src="rw_common/themes/offroad/javascript.js?rwcache=519532457"></script>
+  <script type="text/javascript" src="rw_common/themes/offroad/assets/javascript/background-blur.js?rwcache=519532457"></script>
+		<script type="text/javascript" src="rw_common/themes/offroad/assets/javascript/sidebar-right.js?rwcache=519532457"></script>
+		
+  
+<button id = "btn">定位</button>
+<button id = "btn2">取号</button>
+<div id="lati">纬度</div>
+<div id="longi">经度</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+var latitude="";
+var longitude="";
+var token = "";
+var code = "";
+$(document).ready(function() {
+$("#btn").click(function()
+{
+	$.get("http://180.76.139.96:8899/" + new Date().getTime(), function(data)
+	{ 
+		//$("#feeds").html(data);
+		var dataObj=eval('('+data+')');//转换为json对象
+		//$("#id").html("编号："+dataObj.appId);
+		//$("#name").html("姓名："+dataObj.timestamp);
+		//$("#arg").html("年龄："+dataObj.nonceStr);
+		//$("#sig").html("sig:"+dataObj.signature);
+		
+		//$("span").html(dataObj.remark);
+		alert("Data Loaded: "+new Date().getTime()); 
+		alert(location.href.split('#')[0]);
+		token = dataObj.token;
+		//jssdk config接口注入权限验证配置
+		wx.config({
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    appId: dataObj.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
+		    timestamp: dataObj.timestamp, // 必填，生成签名的时间戳
+		    nonceStr: dataObj.nonceStr, // 必填，生成签名的随机串
+		    signature: dataObj.signature,// 必填，签名，见附录1
+		    jsApiList: ['getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		
+		//verify success
+		wx.ready(function () {
+			//alert("ready!");
+			wx.checkJsApi({
+			    jsApiList: ['getLocation'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+			    success: function(res) {
+			        //alert("check:"+res.checkResult);
+			    },
+			    fail:function()
+			    {
+			    	alert("check fail");
+			    }
+		    });
+			wx.getLocation({
+			    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+			    success: function (res) 
+			    {
+			        latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+			        longitude = res.longitude ; // 经度，浮点数，范围为180 ~ -180。
+			        var speed = res.speed; // 速度，以米/每秒计
+			        var accuracy = res.accuracy; // 位置精度
+			        alert("latitude:"+latitude+" "+"longitude:"+longitude);
+			        $("#lati").html(latitude);
+			        $("#longi").html(longitude);
+			    },
+			    fail:function()
+			    {
+			    	alert("getLoc fail");
+			    }
+			});	
+		});
+		wx.error(function (res) {
+		  	alert(res.errMsg);
+		});
+	});
+});
+$("#btn2").click(function(){
+	alert("btn2");
+	$.get("http://180.76.139.96:9988/" + new Date().getTime(), function(data)
+	{ 
+		if(latitude&&longitude)
+			$("#content").html("注册号:"+data);
+		else
+			alert("请先进行定位，确保您的位置处于北大软微的校区内");
+	});
+});
+});
+</script></body>
+</html>

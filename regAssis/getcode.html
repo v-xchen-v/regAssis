@@ -1,0 +1,37 @@
+<html>
+<head>
+<script type="text/javascript">
+function display_alert()
+  {
+  alert("I am an alert box!!")
+  }
+function getcode()
+{
+	var urlStr=location.href; //取得整个地址栏
+	var num=urlStr.indexOf("?"); 
+	paramStr=urlStr.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+	alert(paramStr); 
+	
+	var num1=urlStr.indexOf("="); 
+	var codeStr=urlStr.substr(num1+1);
+	alert("cs:"+codeStr);
+	var num2=codeStr.indexOf("&");
+	var code = codeStr.substr(0,num2);  
+	alert("c:"+code);
+	//window.opener.document.getElementById('code').value='123123123';
+	sessionStorage.code = code;
+}
+</script>
+</head>
+<body>
+
+<input type="button" onclick="display_alert()"
+value="Display alert box" />
+
+<input type="button" onclick="getcode()"
+value="Display alert box2" />
+
+<input type="button" onclick="window.top.close();"
+value="close" />
+</body>
+</html>
